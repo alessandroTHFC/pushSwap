@@ -1,8 +1,12 @@
 #include "pushSwap.h"
 
-bool	isNb(char *nb);
-bool	isInt(char *nb);
-bool	hasDup(char *nb, char **av, int i);
+static bool	isNb(char *nb);
+static bool	isInt(char *nb);
+static bool	hasDup(char *nb, char **av, int i);
+
+//errorChkr function
+//main error checking function, if statement that if conditions of 3 error handling functions arent met will...
+//..return an error statement and exit the program. Otherwise sends true back to the main..
 
 bool	errorChkr(char **av)
 {
@@ -16,7 +20,10 @@ bool	errorChkr(char **av)
 	return (true);
 }
 
-bool	isNb(char *nb)
+//isNB function
+//checks that character in argument vector is actually a number and not a letter or other type character;
+
+static bool	isNb(char *nb)
 {
 	int	i = -1;
 	while(nb[++i])
@@ -29,7 +36,10 @@ bool	isNb(char *nb)
 	return (true);
 }
 
-bool	isInt(char *nb)
+//isInt function
+//checks that number is within the bounds of an integer;
+
+static bool	isInt(char *nb)
 {
 	long int	num = ft_atoi(nb);
 	if(num < -2147483648 || num > 2147483648)
@@ -37,10 +47,14 @@ bool	isInt(char *nb)
 	return (true);
 }
 
-bool	hasDup(char *nb, char **av, int i)
+//hasDup Function
+//sets num variable equal to integer of number needing to be checked;
+//then uses argument vector i + 1 to check against the next numbers in the list until no more arguments;
+
+static bool	hasDup(char *nb, char **av, int i)
 {
 	long int	num = atoi(nb);
-	while (num[i + 1])
+	while (av[i + 1])
 	{
 		if(num == ft_atoi(av[i + 1]))
 			return (true);

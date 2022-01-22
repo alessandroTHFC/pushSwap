@@ -37,6 +37,16 @@ void	newNode(s_tack	**listA, int value, int pos);
 	curr->next = newNode;
 }
 
+//setValIdx function
+//this function gives each value an index number based on how high its value is.
+//If the list had 50 values stored in it, the highest number of that list would have an index value of 49...
+//..because index begins at zero.
+//current pointer points to head node of the list
+//next pointer points to the second node of the list.
+//while current doesnt equal null, it enters the second loop. if current equals null then it makes current equal...
+//...to the next value and sets next to the head so the it can start comparing current value to the numbers...
+//...at the start of the list. 
+
 void	setValIdx(s_tack **listA)
 {
 	s_tack	*curr;
