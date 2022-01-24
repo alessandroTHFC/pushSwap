@@ -48,13 +48,12 @@ void	sort3(s_tack **listA)
 void	smallSort(s_tack **listA, s_tack **listB, t_data *info)
 {
 	if((*listA)->value == minVal(listA))
-		push(listA, listB, 'A');
+		push(listA, listB, 'B');
 	if((*info)->minValPos <= ((*info)->listLen / 2))
 		rotate(listA, 'A');
 	else
 		revRotate(listA, 'A');
 	if(checkSort(*listA) && chkRevSort(*listB))
-		push(listB, listA, 'B');
+		push(listB, listA, 'A');
 	return ;
 }
-

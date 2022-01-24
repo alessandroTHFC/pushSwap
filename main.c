@@ -11,7 +11,7 @@ int	main(int argc, char	**av)
 		if (errorChkr(av) == false)
 		{
 			initData(&listA, &info, av);
-			while(checkSort(*listA) == false && listB == NULL)
+			while(checkSort(*listA) == false || info->aLen != info->listLen)
 			{	
 				startSorting(&listA, &listB, &info);
 
