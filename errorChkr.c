@@ -14,7 +14,7 @@ bool	errorChkr(char **av)
 	while (av[++i])
 	{
 		if(isNb(av[i]) == false || hasDup(av[i], av, i) == true || isInt(av[i]) == false)
-			ft_printf("Error! Invalid arguments, either:\n Not a number\n Outside bounds of Integer\n Duplicate number");
+			write(1,"Error! Invalid arguments, either:\n Not a number\n Outside bounds of Integer\n Duplicate number", 93);
 			exit (1);
 	}
 	return (true);

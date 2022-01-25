@@ -18,7 +18,7 @@ int	main(int argc, char	**av)
 			}
 		}
 	}
-	ft_printf("list is sorted");
+	write(1, "list is sorted", 14);
 	freeList(&listA);
 	return (0);
 }
