@@ -48,7 +48,7 @@ int	minVal(s_tack **list, t_data **info)
 	return(minVal);
 }
 
-bool	maxVal(s_tack **list, t_data **info)
+int	maxVal(s_tack **list, t_data **info)
 {
 	s_tack	temp = *list;
 	int	maxVal = temp->value;

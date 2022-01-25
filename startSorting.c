@@ -1,5 +1,8 @@
 #include "pushSwap.h"
 
+static void	sort3(s_tack **listA);
+static void	smallSort(s_tack **listA, s_tack **listB, t_data *info);
+
 void	startSorting(s_tack **listA, s_tack **listB, t_data **info)
 {
 	if((*info)->listLen == 2)
@@ -18,7 +21,7 @@ void	startSorting(s_tack **listA, s_tack **listB, t_data **info)
 //sort3 function
 //rudamentary sorting function that handles 3 digits
 
-void	sort3(s_tack **listA)
+static void	sort3(s_tack **listA)
 {
 	if((*listA)->value == maxVal(listA))
 		rotate(listA, 'A');
@@ -40,7 +43,7 @@ void	sort3(s_tack **listA)
 //once it has lowest number at the head, it will push it into stack b.
 //and then continue until list is do
 
-void	smallSort(s_tack **listA, s_tack **listB, t_data *info)
+static void	smallSort(s_tack **listA, s_tack **listB, t_data *info)
 {
 	if((*listA)->value == minVal(listA))
 		push(listA, listB, 'B');

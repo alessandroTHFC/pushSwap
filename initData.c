@@ -1,5 +1,9 @@
 #include "pushSwap.h"
 
+static void	newNode(s_tack **listA, int value, int pos);
+static void	setValIdx(s_tack **listA);
+static void	initData(t_data *info);
+
 void	initList(s_tack *listA, t_data *info, char **av)
 {
 	int	i = 1;
@@ -20,7 +24,7 @@ void	initList(s_tack *listA, t_data *info, char **av)
 	initData(info);
 }
 
-void	newNode(s_tack	**listA, int value, int pos);
+static void	newNode(s_tack	**listA, int value, int pos);
 {
 	s_tack	*curr;
 	s_tack	*newNode;
@@ -48,7 +52,7 @@ void	newNode(s_tack	**listA, int value, int pos);
 //...to the next value and sets next to the head so the it can start comparing current value to the numbers...
 //...at the start of the list. 
 
-void	setValIdx(s_tack **listA)
+static void	setValIdx(s_tack **listA)
 {
 	s_tack	*curr;
 	s_tack 	*next;
@@ -70,7 +74,7 @@ void	setValIdx(s_tack **listA)
 	}
 }
 
-void	initData(t_data *info)
+static void	initData(t_data *info)
 {
 	info->aLen = info->listLen;
 	info->bLen = 0;

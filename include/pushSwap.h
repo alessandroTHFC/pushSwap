@@ -24,3 +24,21 @@ typedef struct	s_data
 	int	holdFront;
 	int	holdBack;
 }				t_data;
+
+//errorChkr.c
+bool	errorChkr(char **av);
+
+//initData.c
+void	initList(s_tack *listA, t_data *info, char **av);
+
+//startSorting.c
+void	startSorting(s_tack **listA, s_tack **listB, t_data **info); ///COME BACK TO THIS PASSED AS DOUBLE POINTER HERE BUT NOT FURTHER ALONG THE LINE!!///
+
+//largeSort.c
+void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy);
+
+//utils.c
+bool	checkSort(s_tack *list);
+bool	checkRevSort(s_tack *list
+int		minVal(s_tack **list, t_data **info);
+int		maxVal(s_tack **list, t_data **info);

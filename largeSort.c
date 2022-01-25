@@ -1,4 +1,6 @@
 #include "pushSwap.h"
+static void	sortB(s_tack **listB, s_tack **listA, t_data *info);
+static void beginRotating(s_tack **src, s_tack **dst, t_data *info, char list);
 
 //setGroupRange function
 //This function divides the list into the given groups set out depending on how many arguments. In the main sorting
@@ -13,7 +15,7 @@
 //(because zero based) however its not the actual number itself. As this function is within the while loop, 
 //of the large sort function, it will call upon every iteration as it changes from node to node. 
 
-void	setGroupRange(t_data *info, int divideBy)
+static void	setGroupRange(t_data *info, int divideBy)
 {
 	int	i = -1;
 	int	size = info->listLen;
@@ -47,9 +49,9 @@ void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 			i++;
 			current = current->next;
 		}
-		rotateA(listA, listB, info)
+		beginRotation(listA, listB, info, 'A')
 	}
-	beginRotation(listB, listA, info, 'A');
+	sortB(listB, listA, info);
 }
 
 void	sortB(s_tack **listB, s_tack **listA, t_data *info)
@@ -62,12 +64,13 @@ void	sortB(s_tack **listB, s_tack **listA, t_data *info)
 		int highVal = current->value
 		while(current)
 		{
-			if(current->value > highVal)
+			if(current->value > highVal)			///can i just set highVal inside the loop = maxVal function?? returns val to highVal and sets infofield maxValPos which is whats needed
 				highVal = current->value;
 				info->highValIdx = i;
 			i++;
 		}
 		beginRotation(listB, listA, info, 'B');
+		current = current->next;
 	}
 }
 
