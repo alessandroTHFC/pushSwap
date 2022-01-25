@@ -32,9 +32,74 @@ void	setGroupRange(t_data *info, int divideBy)
 void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 {
 	s_tack	*current;
+	int i = 0;
 	while(*listA != NULL)
 	{
-		current = (*listA);
+		current = *listA;
+		setGroupRange(info, divideBy);
+		while(current)
+		{
+			if(current->index >= info->minRange && current->index <= info->maxRange
+					&& !info->holdFront)
+				info->holdFront = i;
+			if(current->index >= info->minRange && current->index <= info->maxRange)
+				info->holdBack = i;
+			i++;
+			current = current->next;
+		}
+		rotateA(listA, listB, info)
+	}
+	beginRotation(listB, listA, info, 'A');
+}
+
+void	sortB(s_tack **listB, s_tack **listA, t_data *info)
+{
+	while(*listB)
+	{
+		s_tack *current;
+		current = *listB;
+		int	i = 0;
+		int highVal = current->value
+		while(current)
+		{
+			if(current->value > highVal)
+				highVal = current->value;
+				info->highValIdx = i;
+			i++;
+		}
+		beginRotation(listB, listA, info, 'B');
 	}
 }
 
+void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list)
+{
+	if(list = 'A')
+	{	
+		int	movesFrmBk = (info->holdBack - info->aLen) * -1;
+		int movesFrmFt = info->holdFront;
+	}
+	if(list = 'B')
+	{
+		int	movesFrmBk = (info->highValPos - bLen) * -1;
+		int	movesFrmFt = info->highValPos;
+	}
+
+	if (movesFrmBk < movesFrmFt)
+	{
+		while(movesFrmBk > 0)
+		{
+			revRotate(src, list);
+			movesFrmBk--;
+		}
+	}
+	else if(movesFrmFt < movesFrmBk)
+	{
+		while(movesFrmFront > 0)
+		{
+			rotate(src, list)
+			movesFrmFrnt--;
+		}		
+	}
+	if(movesFrmFt == 0 || movesFrmBk == 0)
+		push(src, dst, list);
+}

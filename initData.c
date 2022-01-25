@@ -1,6 +1,6 @@
 #include "pushSwap.h"
 
-void	initData(s_tack *listA, t_data *info, char **av)
+void	initList(s_tack *listA, t_data *info, char **av)
 {
 	int	i = 1;
 	*listA = (s_tack *)malloc(sizeof(s_tack));
@@ -17,6 +17,7 @@ void	initData(s_tack *listA, t_data *info, char **av)
 		info->listLen++;
 	}
 	setValIdx(listA);
+	initData(info);
 }
 
 void	newNode(s_tack	**listA, int value, int pos);
@@ -67,4 +68,16 @@ void	setValIdx(s_tack **listA)
 		curr = curr->next;
 		next = *list;
 	}
+}
+
+void	initData(t_data *info)
+{
+	info->aLen = info->listLen;
+	info->bLen = 0;
+	info->highValPos = 0;
+	info->minValPos = 0;
+	info->minRange = 0;
+	info->maxRange = 0;
+	info->holdFront = 0;
+	info->holdBack = 0;
 }
