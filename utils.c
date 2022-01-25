@@ -65,3 +65,31 @@ int	maxVal(s_tack **list, t_data **info)
 	}
 	return(maxVal);
 }
+
+static int	isspace(int c)
+{
+	return (c == '\f' || c == '\r' || c == '\n'
+		|| c == '\t' || c == '\v' || c == ' ');
+}
+
+int	atoi(const char *str)
+{
+	int	value;
+	int	posneg;
+
+	value = 0;
+	posneg = 1;
+	while (isspace(*str))
+		str++;
+	if (*str == '-')
+		posneg = -1;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		value = (value * 10) + (*str - '0');
+		str++;
+	}
+	return (value * posneg);
+}
+

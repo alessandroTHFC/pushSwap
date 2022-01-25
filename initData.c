@@ -1,6 +1,6 @@
 #include "pushSwap.h"
 
-static void	newNode(s_tack **listA, int value, int pos);
+static void	addNode(s_tack **listA, int value, int pos);
 static void	setValIdx(s_tack **listA);
 static void	initData(t_data *info);
 
@@ -10,21 +10,21 @@ void	initList(s_tack *listA, t_data *info, char **av)
 	*listA = (s_tack *)malloc(sizeof(s_tack));
 	if(!listA)
 		return (NULL);
-	(*listA)->value = ft_atoi(av[i]);
-	(*listA)->pos = 0;
-	(*listA)->index = 0;
-	(*listA)->next = NULL;
+	listA->value =  atoi(av[i]);
+	listA->pos = 0;
+	listA->index = 0;
+	listA->next = NULL;
 	info->listLen = 1;
 	while(av[++i])
 	{
-		addNode(listA, ft_atoi(av[i], i - 1);
+		addNode(listA, atoi(av[i]), i - 1);
 		info->listLen++;
 	}
 	setValIdx(listA);
 	initData(info);
 }
 
-static void	newNode(s_tack	**listA, int value, int pos);
+static void	addNode(s_tack	**listA, int value, int pos)
 {
 	s_tack	*curr;
 	s_tack	*newNode;
@@ -70,7 +70,7 @@ static void	setValIdx(s_tack **listA)
 			next = next->next;
 		}
 		curr = curr->next;
-		next = *list;
+		next = *listA;
 	}
 }
 

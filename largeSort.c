@@ -1,6 +1,6 @@
 #include "pushSwap.h"
 static void	sortB(s_tack **listB, s_tack **listA, t_data *info);
-static void beginRotating(s_tack **src, s_tack **dst, t_data *info, char list);
+static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list);
 
 //setGroupRange function
 //This function divides the list into the given groups set out depending on how many arguments. In the main sorting
@@ -26,7 +26,7 @@ static void	setGroupRange(t_data *info, int divideBy)
 			&& currSize / (size / divideBy) < i + 1)
 		{
 			info->maxRange = size - (i * (size / divideBy));
-			info->minRange = info->max - (size / divideBy);
+			info->minRange = info->maxRange - (size / divideBy);
 		}
 	}
 }
@@ -49,24 +49,28 @@ void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 			i++;
 			current = current->next;
 		}
-		beginRotation(listA, listB, info, 'A')
+		beginRotation(listA, listB, info, 'A');
 	}
 	sortB(listB, listA, info);
 }
 
-void	sortB(s_tack **listB, s_tack **listA, t_data *info)
+//consider using max function inside loop instead of the ifstatement
+
+static void	sortB(s_tack **listB, s_tack **listA, t_data *info)
 {
 	while(*listB)
 	{
 		s_tack *current;
 		current = *listB;
 		int	i = 0;
-		int highVal = current->value
+		int highVal = current->value;
 		while(current)
 		{
-			if(current->value > highVal)			///can i just set highVal inside the loop = maxVal function?? returns val to highVal and sets infofield maxValPos which is whats needed
+			if(current->value > highVal)
+			{	
 				highVal = current->value;
-				info->highValIdx = i;
+				info->highValPos = i;
+			}	
 			i++;
 		}
 		beginRotation(listB, listA, info, 'B');
@@ -74,16 +78,16 @@ void	sortB(s_tack **listB, s_tack **listA, t_data *info)
 	}
 }
 
-void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list)
+static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list)
 {
-	if(list = 'A')
+	if(list == 'A')
 	{	
 		int	movesFrmBk = (info->holdBack - info->aLen) * -1;
-		int movesFrmFt = info->holdFront;
+		int	movesFrmFt = info->holdFront;
 	}
-	if(list = 'B')
+	if(list == 'B')
 	{
-		int	movesFrmBk = (info->highValPos - bLen) * -1;
+		int	movesFrmBk = (info->highValPos - info->bLen) * -1;
 		int	movesFrmFt = info->highValPos;
 	}
 
@@ -99,7 +103,7 @@ void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list)
 	{
 		while(movesFrmFront > 0)
 		{
-			rotate(src, list)
+			rotate(src, list);
 			movesFrmFrnt--;
 		}		
 	}

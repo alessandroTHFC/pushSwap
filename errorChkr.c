@@ -41,7 +41,7 @@ static bool	isNb(char *nb)
 
 static bool	isInt(char *nb)
 {
-	long int	num = ft_atoi(nb);
+	long int	num = atoi(nb);
 	if(num < -2147483648 || num > 2147483648)
 		return (false);
 	return (true);
@@ -56,7 +56,7 @@ static bool	hasDup(char *nb, char **av, int i)
 	long int	num = atoi(nb);
 	while (av[i + 1])
 	{
-		if(num == ft_atoi(av[i + 1]))
+		if(num == atoi(av[i + 1]))
 			return (true);
 		i++;
 	}
