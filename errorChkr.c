@@ -14,8 +14,10 @@ bool	errorChkr(char **av)
 	while (av[++i])
 	{
 		if(isNb(av[i]) == false || hasDup(av[i], av, i) == true || isInt(av[i]) == false)
+		{	
 			write(1,"Error! Invalid arguments, either:\n Not a number\n Outside bounds of Integer\n Duplicate number", 93);
 			return(false);
+		}	
 	}
 	return (true);
 }

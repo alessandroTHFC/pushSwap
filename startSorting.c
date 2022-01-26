@@ -1,17 +1,17 @@
 #include "pushSwap.h"
 
-static void	sort3(s_tack **listA, t_data **info);
-static void	smallSort(s_tack **listA, s_tack **listB, t_data **info);
+static void	sort3(s_tack **listA, t_data *info);
+static void	smallSort(s_tack **listA, s_tack **listB, t_data *info);
 
-void	startSorting(s_tack **listA, s_tack **listB, t_data **info)
+void	startSorting(s_tack **listA, s_tack **listB, t_data *info)
 {
-	if((*info)->listLen == 2)
+	if(info->listLen == 2)
 		swap(listA, 'A');
-	if((*info)->listLen == 3)
+	if(info->listLen == 3)
 		sort3(listA, info);
-	if((*info)->listLen <= 10)
+	if(info->listLen <= 10)
 		smallSort(listA, listB, info);
-	if((*info)->listLen <= 101)
+	if(info->listLen <= 101)
 		largeSort(listA, listB, info, 5);
 	else
 		largeSort(listA, listB, info, 11);
@@ -21,7 +21,7 @@ void	startSorting(s_tack **listA, s_tack **listB, t_data **info)
 //sort3 function
 //rudamentary sorting function that handles 3 digits
 
-static void	sort3(s_tack **listA, t_data **info)
+static void	sort3(s_tack **listA, t_data *info)
 {
 	if((*listA)->value == maxVal(listA, info))
 		rotate(listA, 'A');
@@ -43,11 +43,11 @@ static void	sort3(s_tack **listA, t_data **info)
 //once it has lowest number at the head, it will push it into stack b.
 //and then continue until list is do
 
-static void	smallSort(s_tack **listA, s_tack **listB, t_data **info)
+static void	smallSort(s_tack **listA, s_tack **listB, t_data *info)
 {
 	if((*listA)->value == minVal(listA, info))
 		push(listA, listB, info,'B');
-	if((*info)->minValPos <= ((*info)->listLen / 2))
+	if(info->minValPos <= (info->listLen / 2))
 		rotate(listA, 'A');
 	else
 		revRotate(listA, 'A');

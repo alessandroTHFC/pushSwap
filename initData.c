@@ -2,40 +2,25 @@
 
 static void	addNode(s_tack **listA, int value, int pos);
 static void	setValIdx(s_tack **listA);
-static void		initData(t_data **info);
 
-void	initList(s_tack **listA, t_data **info, char **av)
+void	initList(s_tack **listA, t_data *info, char **av)
 {
-	printf("negro\n");
 	int	i = 1;
-	*listA = (s_tack *)malloc(sizeof(s_tack));
-	if(!(*listA))
-		return ;
-	printf("hi\n");
-	(*listA)->value =  atoi(av[i]);
-	printf("yes listval is %i\n", (*listA)->value);
-	(*listA)->pos = 0;
-	(*listA)->index = 0;
-	(*listA)->next = NULL;
-	printf("maybe its NULL?\n");
-	(*info)->listLen = 1;
-	printf("fuck off\n");
-	while(av[++i])
+	info->listLen= 0;
+	while(av[i])
 	{
-		printf("in tha loop\n");
-		addNode(listA, atoi(av[i]), i - 1);
-		printf("printing avi %i", atoi(av[i]));
-		(*info)->listLen++;
+		addNode(listA, atoi(av[i]), i);
+		info->listLen++;
+		i++;
 	}
+	printf("makes it thru newnode\n");
 	setValIdx(listA);
-	initData(info);
 }
 
 static void	addNode(s_tack	**listA, int value, int pos)
 {
 	s_tack	*curr;
 	s_tack	*newNode;
-	printf("annoying\n");
 	newNode = (s_tack *)malloc(sizeof(s_tack));
 	if (!newNode)
 		return ;
@@ -44,11 +29,14 @@ static void	addNode(s_tack	**listA, int value, int pos)
 	newNode->index = 0;
 	newNode->next = NULL;
 	curr = *listA;
-	printf("more annoying\n");
-	while(curr->next)
-		curr = curr->next;
-	curr->next = newNode;
-	printf("wtf\n");
+	if(curr)
+	{	
+		while(curr->next)
+			curr = curr->next;
+		curr->next = newNode;
+	}
+	else
+		*listA = newNode;
 }
 
 //setValIdx function
@@ -81,16 +69,4 @@ static void	setValIdx(s_tack **listA)
 		curr = curr->next;
 		next = *listA;
 	}
-}
-
-static void	initData(t_data **info)
-{
-	(*info)->aLen = (*info)->listLen;
-	(*info)->bLen = 0;
-	(*info)->maxValPos = 0;
-	(*info)->minValPos = 0;
-	(*info)->minRange = 0;
-	(*info)->maxRange = 0;
-	(*info)->holdFront = 0;
-	(*info)->holdBack = 0;
-}
+}	

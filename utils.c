@@ -30,7 +30,7 @@ bool	chkRevSort(s_tack *list)
 	return(true);
 }
 
-int	minVal(s_tack **list, t_data **info)
+int	minVal(s_tack **list, t_data *info)
 {
 	s_tack	*temp = *list;
 	int		minVal = temp->value;
@@ -41,14 +41,14 @@ int	minVal(s_tack **list, t_data **info)
 		if(temp->value < minVal)
 		{	
 			minVal = temp->value;
-			(*info)->minValPos = i;
+			info->minValPos = i;
 		}	
 		i++;	
 	}
 	return(minVal);
 }
 
-int	maxVal(s_tack **list, t_data **info)
+int	maxVal(s_tack **list, t_data *info)
 {
 	s_tack	*temp = *list;
 	int	maxVal = temp->value;
@@ -59,7 +59,7 @@ int	maxVal(s_tack **list, t_data **info)
 		if(temp->value > maxVal)
 		{
 			maxVal = temp->value;
-			(*info)->maxValPos = i;
+			info->maxValPos = i;
 		}
 		i++;
 	}

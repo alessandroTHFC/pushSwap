@@ -6,17 +6,16 @@ int	main(int argc, char	**av)
 {
 	s_tack	*listA;
 	s_tack	*listB;
-	t_data	*info;
+	t_data	info;
 	
 	if(argc > 1)
 	{
-		printf("hellooo\n");
-		if (errorChkr(av) == false)
+		if (errorChkr(av))
 		{
 			printf("HELOOO\n");
 			initList(&listA, &info, av);
 			printf("wazzaaaaaa\n");
-			while(checkSort(listA) == false || info->aLen != info->listLen)
+			while(checkSort(listA) == false || info.aLen != info.listLen)
 			{
 				printf("YOOOO\n");	
 				startSorting(&listA, &listB, &info);

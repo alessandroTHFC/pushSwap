@@ -1,6 +1,6 @@
 #include "pushSwap.h"
-static void	sortB(s_tack **listB, s_tack **listA, t_data **info);
-static void	beginRotation(s_tack **src, s_tack **dst, t_data **info, int currLen, char list);
+static void	sortB(s_tack **listB, s_tack **listA, t_data *info);
+static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, int currLen, char list);
 
 //setGroupRange function
 //This function divides the list into the given groups set out depending on how many arguments. In the main sorting
@@ -15,23 +15,23 @@ static void	beginRotation(s_tack **src, s_tack **dst, t_data **info, int currLen
 //(because zero based) however its not the actual number itself. As this function is within the while loop, 
 //of the large sort function, it will call upon every iteration as it changes from node to node. 
 
-static void	setGroupRange(t_data **info, int divideBy)
+static void	setGroupRange(t_data *info, int divideBy)
 {
 	int	i = -1;
-	int	size = (*info)->listLen;
-	int	currSize = (*info)->aLen;
+	int	size = info->listLen;
+	int	currSize = info->aLen;
 	while(++i < divideBy)
 	{
 		if(currSize / (size / divideBy) >= i 
 			&& currSize / (size / divideBy) < i + 1)
 		{
-			(*info)->maxRange = size - (i * (size / divideBy));
-			(*info)->minRange = (*info)->maxRange - (size / divideBy);
+			info->maxRange = size - (i * (size / divideBy));
+			info->minRange = info->maxRange - (size / divideBy);
 		}
 	}
 }
 
-void	largeSort(s_tack **listA, s_tack **listB, t_data **info, int divideBy)
+void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 {
 	s_tack	*current;
 	int i = 0;
@@ -41,11 +41,11 @@ void	largeSort(s_tack **listA, s_tack **listB, t_data **info, int divideBy)
 		setGroupRange(info, divideBy);
 		while(current)
 		{
-			if(current->index >= (*info)->minRange && current->index <= (*info)->maxRange
-					&& !(*info)->holdFront)
-				(*info)->holdFront = i;
-			if(current->index >= (*info)->minRange && current->index <= (*info)->maxRange)
-				(*info)->holdBack = i;
+			if(current->index >= info->minRange && current->index <= info->maxRange
+					&& !info->holdFront)
+				info->holdFront = i;
+			if(current->index >= info->minRange && current->index <= info->maxRange)
+				info->holdBack = i;
 			i++;
 			current = current->next;
 		}
@@ -56,7 +56,7 @@ void	largeSort(s_tack **listA, s_tack **listB, t_data **info, int divideBy)
 
 //consider using max function inside loop instead of the ifstatement
 
-static void	sortB(s_tack **listB, s_tack **listA, t_data **info)
+static void	sortB(s_tack **listB, s_tack **listA, t_data *info)
 {
 	while(*listB)
 	{
@@ -69,21 +69,21 @@ static void	sortB(s_tack **listB, s_tack **listA, t_data **info)
 			if(current->value > maxVal)
 			{	
 				maxVal = current->value;
-				(*info)->maxValPos = i;
+				info->maxValPos = i;
 			}	
 			i++;
 		}
-		(*info)->holdFront = (*info)->maxValPos;
-		(*info)->holdBack = (*info)->maxValPos;
+		info->holdFront = info->maxValPos;
+		info->holdBack = info->maxValPos;
 		beginRotation(listB, listA, info, i, 'B');
 		current = current->next;
 	}
 }
 
-static void	beginRotation(s_tack **src, s_tack **dst, t_data **info, int currLen, char list)
+static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, int currLen, char list)
 {
-	int	movesFrmBk = ((*info)->holdBack - currLen) * -1;
-	int	movesFrmFt = (*info)->holdFront;
+	int	movesFrmBk = (info->holdBack - currLen) * -1;
+	int	movesFrmFt = info->holdFront;
 	
 	if (movesFrmBk < movesFrmFt)
 	{
