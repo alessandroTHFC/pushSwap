@@ -32,7 +32,7 @@ bool	chkRevSort(s_tack *list)
 
 int	minVal(s_tack **list, t_data **info)
 {
-	s_tack	temp = *list;
+	s_tack	*temp = *list;
 	int		minVal = temp->value;
 	int		i = 0;
 	while(temp->next)
@@ -50,7 +50,7 @@ int	minVal(s_tack **list, t_data **info)
 
 int	maxVal(s_tack **list, t_data **info)
 {
-	s_tack	temp = *list;
+	s_tack	*temp = *list;
 	int	maxVal = temp->value;
 	int	i = 0;
 	while(temp->next)

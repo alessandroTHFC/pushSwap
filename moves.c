@@ -89,25 +89,25 @@ void	revRotate(s_tack **list, char listName)
 //temp(pointing at head now) now has its next field set to the destination list.
 //dst pointer now points at temp(previously head node of source list) making it new head of dst list;
 
-void	push(s_tack **src, s_tack **dst, t_data *info , char listName)
+void	push(s_tack **src, s_tack **dst, t_data **info , char listName)
 {
 	s_tack	*temp;
 	
-	temp = *src
+	temp = *src;
 	*src = (*src)->next;
 	temp->next = *dst;
 	*dst = temp;
 	if(listName == 'A')
 	{
 		write(1, "pa\n", 1);
-		info->aLen++;
-		info->bLen--;
+		(*info)->aLen++;
+		(*info)->bLen--;
 	}
 	else
 	{
 		write(1, "pb\n", 1);
-		info->aLen--;
-		info->bLen++;
+		(*info)->aLen--;
+		(*info)->bLen++;
 	}
 	return ;
 }

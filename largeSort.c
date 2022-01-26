@@ -1,6 +1,6 @@
 #include "pushSwap.h"
-static void	sortB(s_tack **listB, s_tack **listA, t_data *info);
-static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list);
+static void	sortB(s_tack **listB, s_tack **listA, t_data **info);
+static void	beginRotation(s_tack **src, s_tack **dst, t_data **info, int currLen, char list);
 
 //setGroupRange function
 //This function divides the list into the given groups set out depending on how many arguments. In the main sorting
@@ -15,23 +15,23 @@ static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list);
 //(because zero based) however its not the actual number itself. As this function is within the while loop, 
 //of the large sort function, it will call upon every iteration as it changes from node to node. 
 
-static void	setGroupRange(t_data *info, int divideBy)
+static void	setGroupRange(t_data **info, int divideBy)
 {
 	int	i = -1;
-	int	size = info->listLen;
-	int	currSize = info->aLen;
+	int	size = (*info)->listLen;
+	int	currSize = (*info)->aLen;
 	while(++i < divideBy)
 	{
 		if(currSize / (size / divideBy) >= i 
 			&& currSize / (size / divideBy) < i + 1)
 		{
-			info->maxRange = size - (i * (size / divideBy));
-			info->minRange = info->maxRange - (size / divideBy);
+			(*info)->maxRange = size - (i * (size / divideBy));
+			(*info)->minRange = (*info)->maxRange - (size / divideBy);
 		}
 	}
 }
 
-void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
+void	largeSort(s_tack **listA, s_tack **listB, t_data **info, int divideBy)
 {
 	s_tack	*current;
 	int i = 0;
@@ -41,56 +41,50 @@ void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 		setGroupRange(info, divideBy);
 		while(current)
 		{
-			if(current->index >= info->minRange && current->index <= info->maxRange
-					&& !info->holdFront)
-				info->holdFront = i;
-			if(current->index >= info->minRange && current->index <= info->maxRange)
-				info->holdBack = i;
+			if(current->index >= (*info)->minRange && current->index <= (*info)->maxRange
+					&& !(*info)->holdFront)
+				(*info)->holdFront = i;
+			if(current->index >= (*info)->minRange && current->index <= (*info)->maxRange)
+				(*info)->holdBack = i;
 			i++;
 			current = current->next;
 		}
-		beginRotation(listA, listB, info, 'A');
+		beginRotation(listA, listB, info, i,'A');
 	}
 	sortB(listB, listA, info);
 }
 
 //consider using max function inside loop instead of the ifstatement
 
-static void	sortB(s_tack **listB, s_tack **listA, t_data *info)
+static void	sortB(s_tack **listB, s_tack **listA, t_data **info)
 {
 	while(*listB)
 	{
 		s_tack *current;
 		current = *listB;
 		int	i = 0;
-		int highVal = current->value;
+		int maxVal = current->value;
 		while(current)
 		{
-			if(current->value > highVal)
+			if(current->value > maxVal)
 			{	
-				highVal = current->value;
-				info->highValPos = i;
+				maxVal = current->value;
+				(*info)->maxValPos = i;
 			}	
 			i++;
 		}
-		beginRotation(listB, listA, info, 'B');
+		(*info)->holdFront = (*info)->maxValPos;
+		(*info)->holdBack = (*info)->maxValPos;
+		beginRotation(listB, listA, info, i, 'B');
 		current = current->next;
 	}
 }
 
-static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list)
+static void	beginRotation(s_tack **src, s_tack **dst, t_data **info, int currLen, char list)
 {
-	if(list == 'A')
-	{	
-		int	movesFrmBk = (info->holdBack - info->aLen) * -1;
-		int	movesFrmFt = info->holdFront;
-	}
-	if(list == 'B')
-	{
-		int	movesFrmBk = (info->highValPos - info->bLen) * -1;
-		int	movesFrmFt = info->highValPos;
-	}
-
+	int	movesFrmBk = ((*info)->holdBack - currLen) * -1;
+	int	movesFrmFt = (*info)->holdFront;
+	
 	if (movesFrmBk < movesFrmFt)
 	{
 		while(movesFrmBk > 0)
@@ -101,12 +95,12 @@ static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, char list)
 	}
 	else if(movesFrmFt < movesFrmBk)
 	{
-		while(movesFrmFront > 0)
+		while(movesFrmFt > 0)
 		{
 			rotate(src, list);
-			movesFrmFrnt--;
+			movesFrmFt--;
 		}		
 	}
 	if(movesFrmFt == 0 || movesFrmBk == 0)
-		push(src, dst, list);
+		push(src, dst, info, list);
 }

@@ -2,23 +2,30 @@
 
 static void	addNode(s_tack **listA, int value, int pos);
 static void	setValIdx(s_tack **listA);
-static void	initData(t_data *info);
+static void		initData(t_data **info);
 
-void	initList(s_tack *listA, t_data *info, char **av)
+void	initList(s_tack **listA, t_data **info, char **av)
 {
+	printf("negro\n");
 	int	i = 1;
 	*listA = (s_tack *)malloc(sizeof(s_tack));
-	if(!listA)
-		return (NULL);
-	listA->value =  atoi(av[i]);
-	listA->pos = 0;
-	listA->index = 0;
-	listA->next = NULL;
-	info->listLen = 1;
+	if(!(*listA))
+		return ;
+	printf("hi\n");
+	(*listA)->value =  atoi(av[i]);
+	printf("yes listval is %i\n", (*listA)->value);
+	(*listA)->pos = 0;
+	(*listA)->index = 0;
+	(*listA)->next = NULL;
+	printf("maybe its NULL?\n");
+	(*info)->listLen = 1;
+	printf("fuck off\n");
 	while(av[++i])
 	{
+		printf("in tha loop\n");
 		addNode(listA, atoi(av[i]), i - 1);
-		info->listLen++;
+		printf("printing avi %i", atoi(av[i]));
+		(*info)->listLen++;
 	}
 	setValIdx(listA);
 	initData(info);
@@ -28,18 +35,20 @@ static void	addNode(s_tack	**listA, int value, int pos)
 {
 	s_tack	*curr;
 	s_tack	*newNode;
-
+	printf("annoying\n");
 	newNode = (s_tack *)malloc(sizeof(s_tack));
 	if (!newNode)
-		return (NULL);
+		return ;
 	newNode->value = value;
 	newNode->pos = pos;
 	newNode->index = 0;
 	newNode->next = NULL;
-	curr = listA;
+	curr = *listA;
+	printf("more annoying\n");
 	while(curr->next)
 		curr = curr->next;
 	curr->next = newNode;
+	printf("wtf\n");
 }
 
 //setValIdx function
@@ -58,7 +67,7 @@ static void	setValIdx(s_tack **listA)
 	s_tack 	*next;
 	
 	if(!(*listA))
-		return (NULL);
+		return ;
 	curr = *listA;
 	next = curr->next;
 	while(curr)
@@ -74,14 +83,14 @@ static void	setValIdx(s_tack **listA)
 	}
 }
 
-static void	initData(t_data *info)
+static void	initData(t_data **info)
 {
-	info->aLen = info->listLen;
-	info->bLen = 0;
-	info->highValPos = 0;
-	info->minValPos = 0;
-	info->minRange = 0;
-	info->maxRange = 0;
-	info->holdFront = 0;
-	info->holdBack = 0;
+	(*info)->aLen = (*info)->listLen;
+	(*info)->bLen = 0;
+	(*info)->maxValPos = 0;
+	(*info)->minValPos = 0;
+	(*info)->minRange = 0;
+	(*info)->maxRange = 0;
+	(*info)->holdFront = 0;
+	(*info)->holdBack = 0;
 }
