@@ -4,17 +4,20 @@
 //REMEMEBER to add the info stuct into minval function calls!!<<<<<<<
 //pointer syntax probably needs fixing too
 
-bool	checkSort(s_tack *list)
+bool	checkSort(s_tack *list, bool rev)
 {
+
 	if(!list || !list->next)
-		return(false);
-	while(list && list->next)
+		return(true);
+	while (list->next)
 	{
-		if(list->value > list->next->value)
-			return(false);
+		if (!rev && list->value > list->next->value)
+			return (false);
+		if (rev && list->value < list->next->value)
+			return (false);
 		list = list->next;
 	}
-	return(true);
+	return (true);
 }
 
 bool	chkRevSort(s_tack *list)
@@ -34,14 +37,16 @@ int	minVal(s_tack **list, t_data *info)
 {
 	s_tack	*temp = *list;
 	int		minVal = temp->value;
-	int		i = 0;
+	int		i = 1;
 	while(temp->next)
 	{
+	//	printf("tempVal is %i and nxt is %i and i is %i\n", temp->value, temp->next->value, i);
 		temp = temp->next;
 		if(temp->value < minVal)
 		{	
 			minVal = temp->value;
 			info->minValPos = i;
+			//printf("minval is %i & pos is %i\n", minVal, info->minValPos);
 		}	
 		i++;	
 	}

@@ -97,15 +97,17 @@ void	push(s_tack **src, s_tack **dst, t_data *info , char listName)
 	*src = (*src)->next;
 	temp->next = *dst;
 	*dst = temp;
-	if(listName == 'A')
+	if(listName == 'B')
 	{
-		write(1, "pa\n", 1);
+		//printf("pushing %i back to a\n", temp->value);
+		write(1, "pa\n", 3);
 		info->aLen++;
 		info->bLen--;
 	}
 	else
 	{
-		write(1, "pb\n", 1);
+		//printf("pushing %i to stack B\n", temp->value);
+		write(1, "pb\n", 3);
 		info->aLen--;
 		info->bLen++;
 	}

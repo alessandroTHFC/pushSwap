@@ -19,26 +19,32 @@ static void	setGroupRange(t_data *info, int divideBy)
 {
 	int	i = -1;
 	int	size = info->listLen;
-	int	currSize = info->aLen;
+	int	currSize = info->aLen - 1;
+	//int var = currSize / (size / divideBy);
 	while(++i < divideBy)
 	{
+		//printf("var is %i\n", var);
 		if(currSize / (size / divideBy) >= i 
 			&& currSize / (size / divideBy) < i + 1)
 		{
+			//printf("into the loop\n");
 			info->maxRange = size - (i * (size / divideBy));
 			info->minRange = info->maxRange - (size / divideBy);
 		}
+		//printf("maxRange is %i and minRange is %i and i is %i\n", info->maxRange, info->minRange, i);
 	}
 }
 
 void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 {
 	s_tack	*current;
-	int i = 0;
+	int i;
 	while(*listA != NULL)
 	{
 		current = *listA;
 		setGroupRange(info, divideBy);
+		i = 0;
+		info->holdFront = 0;
 		while(current)
 		{
 			if(current->index >= info->minRange && current->index <= info->maxRange
@@ -58,7 +64,7 @@ void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 
 static void	sortB(s_tack **listB, s_tack **listA, t_data *info)
 {
-	while(*listB)
+	while(*listB != NULL)
 	{
 		s_tack *current;
 		current = *listB;
@@ -66,17 +72,17 @@ static void	sortB(s_tack **listB, s_tack **listA, t_data *info)
 		int maxVal = current->value;
 		while(current)
 		{
-			if(current->value > maxVal)
-			{	
+			if(current->value >= maxVal)
+			{
 				maxVal = current->value;
 				info->maxValPos = i;
-			}	
-			i++;
+			}
+			i++;	
+			current = current->next;
 		}
 		info->holdFront = info->maxValPos;
 		info->holdBack = info->maxValPos;
 		beginRotation(listB, listA, info, i, 'B');
-		current = current->next;
 	}
 }
 
@@ -93,7 +99,7 @@ static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, int currLen,
 			movesFrmBk--;
 		}
 	}
-	else if(movesFrmFt < movesFrmBk)
+	else if(movesFrmFt <= movesFrmBk)
 	{
 		while(movesFrmFt > 0)
 		{
@@ -102,5 +108,7 @@ static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, int currLen,
 		}		
 	}
 	if(movesFrmFt == 0 || movesFrmBk == 0)
+	{	
 		push(src, dst, info, list);
+	}	
 }

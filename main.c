@@ -1,6 +1,7 @@
 #include "pushSwap.h"
 
 static void freeList(s_tack **list);
+static void	*ft_memset(void *s, int c, size_t len);
 
 int	main(int argc, char	**av)
 {
@@ -10,20 +11,15 @@ int	main(int argc, char	**av)
 	
 	if(argc > 1)
 	{
+		ft_memset(&info, 0, sizeof(t_data));
 		if (errorChkr(av))
 		{
-			printf("HELOOO\n");
 			initList(&listA, &info, av);
-			printf("wazzaaaaaa\n");
-			while(checkSort(listA) == false || info.aLen != info.listLen)
-			{
-				printf("YOOOO\n");	
-				startSorting(&listA, &listB, &info);
-
-			}
+			info.aLen = info.listLen;	
+			startSorting(&listA, &listB, &info);
 		}
 	}
-	write(1, "list is sorted", 14);
+	write(1, "list is sortedi\n", 15);
 	freeList(&listA);
 	return (0);
 }
@@ -38,4 +34,14 @@ static void	freeList(s_tack **list)
 		free(*list);
 		(*list) = current;
 	}
+}
+
+static void	*ft_memset(void *s, int c, size_t len)
+{
+	unsigned char	*str;
+
+	str = (unsigned char *)s;
+	while (len--)
+		*str++ = (unsigned char)c;
+	return (s);
 }

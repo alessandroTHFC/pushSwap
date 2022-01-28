@@ -7,14 +7,16 @@ void	startSorting(s_tack **listA, s_tack **listB, t_data *info)
 {
 	if(info->listLen == 2)
 		swap(listA, 'A');
-	if(info->listLen == 3)
+	else if(info->aLen == 3)
 		sort3(listA, info);
-	if(info->listLen <= 10)
+	else if(info->listLen > 3 && info->listLen <= 10)
 		smallSort(listA, listB, info);
-	if(info->listLen <= 101)
+	else if(info->listLen > 10)
 		largeSort(listA, listB, info, 5);
 	else
 		largeSort(listA, listB, info, 11);
+//	while(*listB)
+//		push(listB, listA, info, 'B');
 	return ; 
 }
 
@@ -23,12 +25,16 @@ void	startSorting(s_tack **listA, s_tack **listB, t_data *info)
 
 static void	sort3(s_tack **listA, t_data *info)
 {
-	if((*listA)->value == maxVal(listA, info))
-		rotate(listA, 'A');
-	else if((*listA)->next->value == minVal(listA, info) || chkRevSort(*listA) == true)
-		swap(listA, 'A');
-	else
-		revRotate(listA, 'A');
+	while(!checkSort(*listA, false))
+	{		
+		//printf("inside sort3\n");
+		if((*listA)->value == maxVal(listA, info))
+			rotate(listA, 'A');
+		else if((*listA)->next->value == minVal(listA, info) || checkSort(*listA, true) == true)
+			swap(listA, 'A');
+		else
+			revRotate(listA, 'A');
+	}
 	return ;
 }
 
@@ -45,13 +51,25 @@ static void	sort3(s_tack **listA, t_data *info)
 
 static void	smallSort(s_tack **listA, s_tack **listB, t_data *info)
 {
-	if((*listA)->value == minVal(listA, info))
-		push(listA, listB, info,'B');
-	if(info->minValPos <= (info->listLen / 2))
-		rotate(listA, 'A');
-	else
-		revRotate(listA, 'A');
-	if(checkSort(*listA) && chkRevSort(*listB))
-		push(listB, listA, info , 'A');
+	int min;
+	while(!checkSort(*listA, false) || info->aLen != info->listLen)
+	{
+		min = minVal(listA, info);
+		//printf("inside smallsort j  is %i, min is %i\n", j, min);
+		if(checkSort(*listA, false) && checkSort(*listB, true))
+		{	
+			push(listB, listA, info,'B');
+		}	
+		else if((*listA)->value == minVal(listA, info))
+		{
+			push(listA, listB, info, 'A');
+		}
+		else if(info->aLen == 3)
+			sort3(listA, info);
+		else if(info->minValPos <= (info->aLen / 2))
+			rotate(listA, 'A');
+		else
+			revRotate(listA, 'A');
+	}	
 	return ;
 }

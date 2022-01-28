@@ -13,7 +13,6 @@ void	initList(s_tack **listA, t_data *info, char **av)
 		info->listLen++;
 		i++;
 	}
-	printf("makes it thru newnode\n");
 	setValIdx(listA);
 }
 
@@ -26,7 +25,7 @@ static void	addNode(s_tack	**listA, int value, int pos)
 		return ;
 	newNode->value = value;
 	newNode->pos = pos;
-	newNode->index = 0;
+	newNode->index = 1;
 	newNode->next = NULL;
 	curr = *listA;
 	if(curr)
