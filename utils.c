@@ -1,12 +1,12 @@
 #include "pushSwap.h"
 
-//utils file will include: minVal/maxVal functions && checkSort/chkRevSort functions
-//REMEMEBER to add the info stuct into minval function calls!!<<<<<<<
-//pointer syntax probably needs fixing too
+///checkSort function;
+///this function is vital for the operation of the sort;
+///it iteratates through the linked list checking if the list is sorted in ascending order, and;
+///whether or not the bool rev is true will look for checking if sorter in descending order;
 
 bool	checkSort(s_tack *list, bool rev)
 {
-
 	if(!list || !list->next)
 		return(true);
 	while (list->next)
@@ -20,18 +20,9 @@ bool	checkSort(s_tack *list, bool rev)
 	return (true);
 }
 
-bool	chkRevSort(s_tack *list)
-{
-	if(!list || !list->next)
-		return(false);
-	while(list && list->next)
-	{
-		if(list->value < list->next->value)
-			return(false);
-		list = list->next;		
-	}
-	return(true);
-}
+///minVal function
+///Returns the minimum value in the list and also assigns values list position to the variable
+///minValPos in the info struct;
 
 int	minVal(s_tack **list, t_data *info)
 {
@@ -40,13 +31,11 @@ int	minVal(s_tack **list, t_data *info)
 	int		i = 1;
 	while(temp->next)
 	{
-	//	printf("tempVal is %i and nxt is %i and i is %i\n", temp->value, temp->next->value, i);
 		temp = temp->next;
 		if(temp->value < minVal)
 		{	
 			minVal = temp->value;
 			info->minValPos = i;
-			//printf("minval is %i & pos is %i\n", minVal, info->minValPos);
 		}	
 		i++;	
 	}

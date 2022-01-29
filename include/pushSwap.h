@@ -41,7 +41,6 @@ void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy);
 
 //utils.c
 bool	checkSort(s_tack *list, bool rev);
-bool	chkRevSort(s_tack *list);
 int	minVal(s_tack **list, t_data *info);
 int	maxVal(s_tack **list, t_data *info);
 int	atoi(const char *str);

@@ -35,6 +35,17 @@ static void	setGroupRange(t_data *info, int divideBy)
 	}
 }
 
+///largeSort Function
+///This function begins with a while loop so as to continue looping while the contents of listA are NULL;
+///makes a pointer to the head of the listA called current and a counter i to keep track of the amount of iterations.
+//callint the previous setGroupRange function to get the variables minRange & maxRange. This allows the sort to pick
+///numbers into their "groups". In order to find the valur within said group and also, the value that can be moved to
+///head of list in least moves is found using the holdFront and holdBack variables. Should a value you found at index
+///pos 4 its idx post will get assigned to holdFront(nearest value to start of list). After that it will assign every 
+///number in the list within that range to holdBack until the last on it finds(closest to back of list). If this value
+///is pos 48 of listLen 50, it will only be two moves from the back of the list. Then calling the beginRotation function
+/// which makes the moves required to rotate and push. while Sort B, will sort the numbers from listB back to A. 
+
 void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 {
 	s_tack	*current;
@@ -60,7 +71,13 @@ void	largeSort(s_tack **listA, s_tack **listB, t_data *info, int divideBy)
 	sortB(listB, listA, info);
 }
 
-//consider using max function inside loop instead of the ifstatement
+///SortB function
+///The Sorting of listB is done in a non optimal way, however it works;
+///It works on the basis of finding the highest number in the list in that iteration;
+///Int maxVal is assigned to the value at the head of list and it will iterate through the list
+///reassigning maxVal to any value higher and assigned its index position, until the end of the list;
+///Following the current while loop, assigning the values of holdFront and holdBack to that index pos;
+///and then calling the rotation and pushing faction to calculate the best way to rotate and push back to A;
 
 static void	sortB(s_tack **listB, s_tack **listA, t_data *info)
 {
@@ -85,6 +102,14 @@ static void	sortB(s_tack **listB, s_tack **listA, t_data *info)
 		beginRotation(listB, listA, info, i, 'B');
 	}
 }
+
+///BeginRotation function
+///This function controls the actual rotations and pushing of nodes;
+///working on the principle of finding whether movesFrmBk or movesFromFrnt is smaller to determine;
+///which is the better way to rotate in order to get desired value to the head of the list;
+///if moves from back is 4 and moves from front is 10, then it will enter the required loop;
+///while 4 is greater than zero it will rotate the list to get the node near the back to the head;
+///at which point it will enter the if statement where moves from back will be 0 and push the head node;
 
 static void	beginRotation(s_tack **src, s_tack **dst, t_data *info, int currLen, char list)
 {
